@@ -1,0 +1,26 @@
+<h2>Lista de productos</h2>
+<hr>
+{{#if products.[0]}}
+    <table class="table table-striped border">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Imagen</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+        {{#products}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{title}}</td>
+                <td>${{price}}</td>
+                <td><img style="width: 100px" src="{{thumbnail}}" alt="img-products"></td>
+            </tr>
+        {{/products}}
+        </tbody>
+    </table>
+{{else}}
+<h2>No hay productos en la lista</h2>
+{{/if}}
