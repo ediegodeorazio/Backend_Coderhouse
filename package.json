@@ -1,17 +1,15 @@
 {
-  "name": "handlebars",
+  "name": "desafio7",
   "version": "1.0.0",
-  "description": "",
+  "description": "primera entrega del proyecto final coder backend",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "author": "DiegoD",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "express-handlebars": "^6.0.6",
-    "socket.io": "^4.5.3"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
   }
 }

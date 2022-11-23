@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "timestamp": 1668881203390,
+    "title": "Dragon Ball Z: Fighter Z",
+    "price": 5000,
+    "description": "Description here",
+    "code": "DBZ-1",
+    "image": "https://i.ibb.co/8NyJF70/dbz.jpg",
+    "stock": 50
+  },
+  {
+    "id": 2,
+    "timestamp": 1668881186120,
+    "title": "The Marvel: Spiderman",
+    "price": 2500,
+    "description": "Description here",
+    "code": "SPD-6",
+    "image": "https://i.ibb.co/rm8Bq2g/spiderman.png",
+    "stock": 60
+  },
+  {
+    "id": 3,
+    "timestamp": 1668881195430,
+    "title": "The Last Of Us",
+    "price": 6900,
+    "description": "Description here",
+    "code": "TLOU-1",
+    "image": "https://i.ibb.co/kXhSmRP/thelastofus.png",
+    "stock": 35
+  },
+  {
+    "id": 4,
+    "timestamp": 1668881354246,
+    "title": "God of War: Ragnarok",
+    "price": 7900,
+    "description": "Description here",
+    "code": "GOW-R",
+    "image": "https://image.api.playstation.com/vulcan/ap/rnd/202109/2821/KkIiB8w4CBvZspu6zyzOza3p.png",
+    "stock": 12
+  },
+  {
+    "id": 6,
+    "title": "Mortal Kombat",
+    "price": 56500,
+    "description": "Description here",
+    "code": "PUBG-1",
+    "image": "https://i.ibb.co/8NyJF70/dbz.jpg",
+    "stock": 50,
+    "timestamp": 1668883942034
+  }
+]

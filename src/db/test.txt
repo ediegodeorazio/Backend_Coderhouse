@@ -1,0 +1,9 @@
+Add product
+{
+    "title": "PUBG",
+    "price": 565,
+    "description": "Description here",
+    "code": "PUBG-1",
+    "image": "https://i.ibb.co/8NyJF70/dbz.jpg",
+    "stock": 50
+}

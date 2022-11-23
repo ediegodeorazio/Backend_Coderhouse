@@ -9,7 +9,7 @@ class Contenedor {
     async save(object) {
         try {
             //Generate file
-            if(fs.existsSync(this.filename)) {
+            if (fs.existsSync(this.filename)) {
                 let info = await fs.promises.readFile(this.filename, 'utf8')
                 let result = JSON.parse(info)
 
@@ -48,6 +48,7 @@ class Contenedor {
 
     //getById(Number)
     async getById(id) {
+        id = Number(id)
         try {
             let info = await fs.promises.readFile(this.filename, 'utf8')
             let result = JSON.parse(info)
@@ -72,11 +73,13 @@ class Contenedor {
     //deleteById(number)
     async deleteById(id) {
         try {
+            id = Number(id)
             let info = await fs.promises.readFile(this.filename, 'utf8')
             let result = JSON.parse(info)
 
             const objectToDelete = result.find(product => product.id === id)
-            if(objectToDelete) {
+
+            if (objectToDelete) {
                 const index = result.indexOf(objectToDelete)
                 result.splice(index, 1)
                 await fs.promises.writeFile(this.filename, JSON.stringify(result, null, 2))
@@ -98,22 +101,90 @@ class Contenedor {
     //updateById()
     async updateById(id, newObject) {
         try {
+            id = Number(id)
+            let info = await fs.promises.readFile(this.filename, 'utf8')
+            let result = JSON.parse(info)
+
+            const objectToUpdate = result.find(product => product.id === id)
+            if (objectToUpdate) {
+                const index = result.indexOf(objectToUpdate)
+
+                const objectKeys = Object.keys(newObject)
+
+                objectKeys.forEach(key => {
+                    result[index][key] = newObject[key]
+                })
+
+                await fs.promises.writeFile(this.filename, JSON.stringify(result, null, 2))
+                return true
+            } else {
+                console.log(`Id ${id} doesn't exists`)
+                return false
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    /* Cart */
+    async addToCartById(id, newObject) {
+        try {
+            id = Number(id)
+            let info = await fs.promises.readFile(this.filename, 'utf8')
+            let result = JSON.parse(info)
+
+            const objectToAdd = result.find(product => product.id === id)
+            if(objectToAdd) {
+                const index = result.indexOf(objectToAdd)
+                const getValue = result[index]
+                const getProducts = getValue['products']
+                getProducts.push(newObject.products)
+
+                await fs.promises.writeFile(this.filename, JSON.stringify(result, null, 2))
+                return true
+            } else {
+                console.log(`Id ${id} doesn't exists or content is wrong`)
+                return false
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    async removeFromCartById(id, idObjToRemove, objKey) {
+        try {
+            id = Number(id)
             let info = await fs.promises.readFile(this.filename, 'utf8')
             let result = JSON.parse(info)
 
             const objectToUpdate = result.find(product => product.id === id)
             if(objectToUpdate) {
                 const index = result.indexOf(objectToUpdate)
-                
-                result[index]['title'] = newObject.title
-                result[index]['price'] = newObject.price
-                result[index]['thumbnail'] = newObject.thumbnail
+
+                const getValue = result[index][objKey]
+                let indexToRemove = -1
+                getValue.forEach((element, indexN) => {
+                    if(element.id == idObjToRemove) {
+                        indexToRemove = indexN
+                    }
+                })
+
+                const newArray = [...getValue]
+
+                if(indexToRemove > -1) {
+                    newArray.splice(indexToRemove, 1)
+                }
+
+                result[index][objKey] = newArray
                 await fs.promises.writeFile(this.filename, JSON.stringify(result, null, 2))
                 return true
             } else {
                 console.log(`Id ${id} doesn't exists`)
+                return false
             }
-        } catch (error) {
+        } 
+        catch (error) {
             console.log(error)
         }
     }
