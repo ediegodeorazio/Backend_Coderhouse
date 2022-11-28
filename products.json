@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Dragon Ball Z: Fighter Z",
+    "price": "5000",
+    "thumbnail": "https://i.ibb.co/8NyJF70/dbz.jpg"
+  },
+  {
+    "id": 2,
+    "title": "The Marvel: Spiderman",
+    "price": "4500",
+    "thumbnail": "https://i.ibb.co/rm8Bq2g/spiderman.png"
+  },
+  {
+    "id": 3,
+    "title": "The Last Of Us",
+    "price": "3200",
+    "thumbnail": "https://i.ibb.co/kXhSmRP/thelastofus.png"
+  },
+  {
+    "id": 4,
+    "title": "God of War: Ragnarok",
+    "price": "6900",
+    "thumbnail": "https://image.api.playstation.com/vulcan/ap/rnd/202109/2821/KkIiB8w4CBvZspu6zyzOza3p.png"
+  },
+  {
+    "id": 5,
+    "title": "PUBG",
+    "price": "1200",
+    "thumbnail": "https://cdn.shopify.com/s/files/1/0355/8296/7943/products/playerunknowns-battlegrounds-543717.1_1024x.jpg"
+  }
+]

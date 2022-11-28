@@ -1,15 +1,20 @@
 {
-  "name": "desafio7",
+  "name": "handlebars",
   "version": "1.0.0",
-  "description": "primera entrega del proyecto final coder backend",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "DiegoD",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "knex": "^2.3.0",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.5.3",
+    "sqlite3": "^5.1.2"
   }
 }

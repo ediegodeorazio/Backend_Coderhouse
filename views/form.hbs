@@ -1,0 +1,181 @@
+<form class="bg-secondary text-white shadow p-3 mb-5 rounded" action="/productos" method="POST">
+  {{!-- Add Product --}}
+  <div class="bg-dark p-4 mt-2 rounded">
+    <h4>Cargar producto</h4>
+    <hr>
+    <div class="row d-flex gap-2 justify-content-center align-items-center">
+      <div class="col-sm-3">
+        <label class="form-label">Titulo</label>
+        <input type="text" id="input-title" class="form-control" aria-label="Titulo" name="title"
+          placeholder="Ingrese el titulo..." required>
+      </div>
+
+      <div class="col-sm-2">
+        <label class="form-label">Precio</label>
+        <input type="text" id="input-price" class="form-control" aria-label="Precio" name="price"
+          placeholder="Ingrese el precio..." required>
+      </div>
+
+      <div class="col-sm-4">
+        <label class="form-label">URL Imagen</label>
+        <input type="text" id="input-thumbnail" class="form-control" aria-label="Thumbnail" name="thumbnail"
+          placeholder="Ingrese URL de imagen..." required>
+      </div>
+      <div class="col-sm-2">
+        <label class="form-label">&nbsp;</label>
+        <button type="submit" id="btn-submit-prod" class="btn btn-primary form-control">Agregar producto</button>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Table Products --}}
+  <div class="bg-dark p-4 mt-2 rounded">
+    <h4>Lista de productos</h4>
+    <hr>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr class="text-center">
+          <th scope="col">ID</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Imagen</th>
+        </tr>
+      </thead>
+      <tbody id="table-body" class="text-center">
+
+      </tbody>
+    </table>
+  </div>
+
+  {{!-- Chat --}}
+  <div class="bg-dark p-4 mt-2 rounded">
+    <h4>Chatea con otros usuarios</h4>
+    <hr>
+    <div class="mb-3">
+      <div class="row d-flex gap-2 justify-content-center align-items-center">
+        <div class="col-sm-3">
+          <label class="form-label">E-mail</label>
+          <input type="email" id="inputEmail" class="form-control" aria-label="Thumbnail" name="email"
+            placeholder="Ingrese su e-mail..." required>
+        </div>
+
+        <div class="col-sm-6">
+          <label class="form-label">Mensaje</label>
+          <input type="text" id="inputMsg" class="form-control" aria-label="Thumbnail" name="message"
+            placeholder="Ingrese el mensaje..." required>
+        </div>
+
+        <div class="col-sm-2">
+          <label class="form-label">&nbsp;</label>
+          <button id="btn-submit-msg" class="btn btn-success form-control py-2">Enviar mensaje</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Messages --}}
+  <div class="bg-dark p-4 mt-2 rounded">
+    <h4>Historial de mensajes</h4>
+    <hr>
+    <div id="message-history"></div>
+  </div>
+
+  {{!-- Script --}}
+  <script>
+    const socket = io()
+    //Buttons
+    const btnProd = document.getElementById('btn-submit-prod')
+    const btnMsg = document.getElementById('btn-submit-msg')
+
+    //Inputs
+    const inputTitle = document.getElementById('input-title')
+    const inputPrice = document.getElementById('input-price')
+    const inputThumbnail = document.getElementById('input-thumbnail')
+
+    //Divs
+    const messageHistory = document.getElementById('message-history')
+    const tableBody = document.getElementById('table-body')
+
+    //Event BtnProd
+    btnProd.addEventListener('click', (e) => {
+
+      const title = inputTitle.value
+      const price = inputPrice.value
+      const img = inputThumbnail.value
+
+      if (title !== '' && price !== '' && img !== '') {
+        socket.emit('productAdded', {
+          "title": title,
+          "price": price,
+          "thumbnail": img
+        })
+      }
+    })
+
+    //Event BtnMsg
+    btnMsg.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('inputEmail').value;
+      const message = document.getElementById('inputMsg').value;
+
+      if (email !== '' && message !== '') {
+
+        socket.emit('newMessage', {
+          "email": email,
+          "message": message,
+          "date": new Date().toLocaleString()
+        })
+      }
+    })
+
+    socket.on('send-message-update', (data) => {
+      let htmlContent = ''
+      data.forEach((msg) => {
+        htmlContent += `<small style="display:block"> - <em style="color:brown">[${msg.date}]</em> <strong style="color:#557AE5">${msg.email}</strong>: <span style="color:green; font-style: italic">${msg.message}</span> </small>`
+        messageHistory.innerHTML = htmlContent
+      })
+    })
+
+    socket.on('send-message', (data) => {
+      let htmlContent = ''
+      data.forEach((msg) => {
+        htmlContent += `<small style="display:block"> - <em style="color:brown">[${msg.date}]</em> <strong style="color:#557AE5">${msg.email}</strong>: <span style="color:green; font-style: italic">${msg.message}</span> </small>`
+        messageHistory.innerHTML = htmlContent
+      })
+    })
+
+    socket.on('list-products', (data) => {
+      let htmlContent = ''
+      data.forEach((prod) => {
+        htmlContent +=
+        `
+          <tr class='text-white'>
+              <td>${prod.id}</td>
+              <td>${prod.title}</td>
+              <td>${prod.price}</td>
+              <td><img style="width: 60px" src="${prod.thumbnail}" alt="img-products"></td>
+          </tr>
+        `
+        tableBody.innerHTML = htmlContent
+      })
+    })
+
+    socket.on('list-products-update', (data) => {
+      let htmlContent = ''
+      data.forEach((prod) => {
+        htmlContent +=
+        `
+          <tr class='text-white'>
+              <td>${prod.id}</td>
+              <td>${prod.title}</td>
+              <td>${prod.price}</td>
+              <td><img style="width: 60px" src="${prod.thumbnail}" alt="img-products"></td>
+          </tr>
+        `
+        tableBody.innerHTML = htmlContent
+      })
+    })
+
+  </script>
+
+</form>
