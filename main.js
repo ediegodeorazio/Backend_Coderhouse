@@ -9,7 +9,7 @@ const server = http.createServer(app)
 const io = new Server(server)
 
 //SQL
-import { options } from "./connections/options.js"
+import  { options }  from "./connections/options.js"
 import knex from "knex"
 const connectionMySql = knex(options.mysql)
 const connectionSqlite3 = knex(options.sqlite3)
@@ -94,19 +94,19 @@ app.get("/productos", async (req, res) => {
     res.render("listProducts", { products });
 });
 
-//AddProduct (form)
+//añadir productos (form)
 app.get("/", (req, res) => {
     res.render("form", {});
 });
 
-//AddProduct fn
+//funcion añadir producto
 app.post("/productos", async (req, res) => {
     const dataBody = req.body;
     await newProduct.save(dataBody);
     res.redirect("/");
 });
 
-//Server on
+//Servidor
 const PORT = 8080;
 server.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`)
