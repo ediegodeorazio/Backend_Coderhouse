@@ -1,4 +1,4 @@
-const options = {
+export const options = {
     mysql: {
         client: 'mysql',
         connection: {
@@ -12,10 +12,8 @@ const options = {
     sqlite3: {
         client: 'sqlite3',
         connection: {
-            filename: '../db/mydb.sqlite'
+            filename: `db/mydb.sqlite`
         },
         useNullAsDefault: true
     }
 };
-
-module.exports = options;

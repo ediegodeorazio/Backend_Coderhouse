@@ -1,23 +1,23 @@
 //Express
-const express = require("express");
-const app = express();
+import express from "express"
+const app = express()
 
 //Socket / Http
-const { Server } = require("socket.io")
-const http = require("http")
+import { Server } from "socket.io"
+import http from "http"
 const server = http.createServer(app)
 const io = new Server(server)
 
 //SQL
-const options = require('./connections/options.js');
-const knex = require('knex');
-const connectionMySql = knex(options.mysql);
+import { options } from "./connections/options.js"
+import knex from "knex"
+const connectionMySql = knex(options.mysql)
 const connectionSqlite3 = knex(options.sqlite3)
 
 //Container
-const Contenedor = require("./contenedor")
-const newProduct = new Contenedor(options.mysql, 'productos');
-const newChat = new Contenedor(options.sqlite3, 'mensajes');
+import { Contenedor } from "./Contenedor.js"
+const newProduct = new Contenedor(connectionMySql, 'productos')
+const newChat = new Contenedor(connectionSqlite3, 'mensajes')
 
 //Parse JSON / public
 app.use(express.json())
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 
 //Handlebars
-const handlebars = require('express-handlebars')
+import handlebars from "express-handlebars"
 
 //Set app
 app.set("views", "./views") //Especifica el directorio de vistas
@@ -37,31 +37,26 @@ app.engine(
     handlebars.engine({
         extname: ".hbs",
         defaultLayout: "index.hbs",
-        layoutsDir: __dirname + "/views",
-        partialsDir: __dirname + "/views/partials",
+        layoutsDir: "./views",
+        partialsDir: "./views/partials",
     })
 )
+
+//MySql + Sqlite3
+import { mysqlFunc, sqlite3Func } from "./connections/connections.js"
+//Crear tabla productos
+mysqlFunc()
+
+//Crear tabla mensajes
+sqlite3Func()
 
 //Io Connection
 io.on("connection", async (socket) => {
     console.log("Usuario Conectado")
 
-    //Crear la tabla
     try {
+
         //Productos
-        const exists = await connectionMySql.schema.hasTable('productos')
-
-        if (exists) {
-            await connectionMySql.schema.dropTable('productos')
-        }
-
-        await connectionMySql.schema.createTable('productos', (table) => {
-            table.increments('id').primary
-            table.string('title', 25).notNullable()
-            table.float('price')
-            table.string('thumbnail', 100)
-        })
-
         const products = await newProduct.getAll()
         socket.emit("list-products", products)
 
@@ -72,20 +67,7 @@ io.on("connection", async (socket) => {
             io.sockets.emit("list-products-update", products)
         })
 
-// Mensajes
-        const existsMsg = await connectionSqlite3.schema.hasTable('mensajes')
-
-        if (existsMsg) {
-            await connectionSqlite3.schema.dropTable('mensajes')
-        }
-
-        await connectionSqlite3.schema.createTable('mensajes', (table) => {
-            table.increments('id').primary
-            table.string('email', 40).notNullable()
-            table.string('message', 100).notNullable()
-            table.string('date', 100).notNullable()
-        })
-
+        //Mensajes
         const msgs = await newChat.getAll();
         socket.emit("send-message", msgs)
 
