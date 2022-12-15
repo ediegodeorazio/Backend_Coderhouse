@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "timestamp": 1668886799005,
+    "products": [
+      {
+        "id": 4,
+        "timestamp": 1668881354246,
+        "title": "God of War: Ragnarok",
+        "price": 7900,
+        "description": "Description here",
+        "code": "GOW-R",
+        "image": "https://image.api.playstation.com/vulcan/ap/rnd/202109/2821/KkIiB8w4CBvZspu6zyzOza3p.png",
+        "stock": 12
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "timestamp": 1668887928143,
+    "products": []
+  },
+  {
+    "id": 4,
+    "timestamp": 1668887929385,
+    "products": []
+  }
+]

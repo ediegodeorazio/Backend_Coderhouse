@@ -1,22 +1,17 @@
 {
-  "name": "handlebars",
+  "name": "desafio10",
   "version": "1.0.0",
-  "description": "",
+  "description": "segunda entrega del proyecto final coder backend",
   "main": "main.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Diego",
+  "author": "EDiegoD",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-handlebars": "^6.0.6",
-    "knex": "^2.3.0",
-    "mysql": "^2.18.1",
-    "socket.io": "^4.5.3",
-    "sqlite3": "^5.1.2"
+    "firebase-admin": "^11.3.0",
+    "mongoose": "^6.8.0"
   }
 }
